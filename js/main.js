@@ -7,6 +7,7 @@ $(function(){
   $('#paypal').hide();
   $('#bitcoin').hide();
   $('#colors-js-puns').hide();
+  $('#mail').append(`<span class="emsg">Please Enter a Valid Email</span>`);
   $('.emsg').css('visibility', 'hidden');
 });
 
@@ -105,10 +106,14 @@ $('#payment').on('change', function (e) {
     $('#credit-card').hide();
     $('#paypal').show();
     $('#bitcoin').hide();
-  } else {
+  } else if(this.value === 'bitcoin'){
     $('#credit-card').hide();
     $('#paypal').hide();
     $('#bitcoin').show();
+  } else if(this.value === 'select_method'){
+    $('#credit-card').hide();
+    $('#paypal').hide();
+    $('#bitcoin').hide();
   }
 });
 
@@ -135,6 +140,8 @@ function validateForm(){
     $('#name').css('border', 'solid 2px red');
     errorMessage += 'Please enter a valid name.\n';
     isValidated = false;
+  } else {
+    $('#name').css('border', 'none');
   }
 
   //Check for valid email format
@@ -143,12 +150,16 @@ function validateForm(){
     $('div.error').show();
     errorMessage += 'Please enter a valid email.\n';
     isValidated = false;
+  } else {
+    $('#mail').css('border', 'none');
   }
 
   //Must select at least one checkbox
   const checkboxLength = $('.activities input').length;
+
   for(let i = 0; i < checkboxLength; i++){
     if($('.activities input')[i].checked){
+      $('.activities legend').css('color', '#184f68');
       break;
     } else if(!$('.activities input')[i].checked && i === (checkboxLength - 1)){
       errorMessage += 'You have not registered for an activity.\n';
@@ -156,6 +167,7 @@ function validateForm(){
       isValidated = false;
     }
   }
+
 
   //Check for valid Credit Card Info
   if($('#credit-card').is(':visible')){
@@ -168,6 +180,8 @@ function validateForm(){
       errorMessage += 'Please enter a card number that is between 13 and 16 digits long.\n';
       $('#cc-num').css('border', 'solid 2px red');
       isValidated = false;
+    } else {
+      $('#cc-num').css('border', 'none');
     }
 
     //5 digit zip Code
@@ -175,6 +189,8 @@ function validateForm(){
       errorMessage += 'Enter a valid 5 digit zip code.\n';
       $('#zip').css('border', 'solid 2px red');
       isValidated = false;
+    } else {
+      $('#zip').css('border', 'none');
     }
 
     //3 digit CVV
@@ -182,6 +198,8 @@ function validateForm(){
       errorMessage += 'Enter a valid 3 digit CVV.';
       $('#cvv').css('border', 'solid 2px red');
       isValidated = false;
+    } else {
+      $('#cvv').css('border', 'none');
     }
   }
     if(!isValidated){
