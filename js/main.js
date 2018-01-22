@@ -168,6 +168,15 @@ function validateForm(){
     }
   }
 
+  if(!$('#credit-card').is(':visible') &&
+    !$('#paypal').is(':visible') &&
+    !$('#bitcoin').is(':visible')){
+      isValidated = false;
+      errorMessage += 'Please enter a valid payment method.\n';
+      $('#payment').prev().prev().css('color', 'red');
+    } else {
+      $('#payment').prev().prev().css('color', '#184f68');
+    }
 
   //Check for valid Credit Card Info
   if($('#credit-card').is(':visible')){
